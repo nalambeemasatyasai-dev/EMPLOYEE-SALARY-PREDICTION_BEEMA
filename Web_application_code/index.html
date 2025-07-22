@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Salary Classifier</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb, #f6d365, #fda085);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      min-height: 100vh;
+      padding: 40px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .gradient-card {
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      color: #2d3436;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .gradient-card2 {
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #c6ffdd, #fbd786, #f7797d);
+      color: #2d3436;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .prediction-box {
+      font-size: 1.3rem;
+    }
+
+    .text-muted {
+      color: #555 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row g-4">
+      <!-- Input Form Card -->
+      <div class="col-md-4">
+        <div class="card p-4 gradient-card">
+          <h4 class="text-center mb-3">📝 Enter Employee Details</h4>
+          <form method="POST">
+            <label class="form-label">Age: <span id="ageVal">30</span></label>
+            <input type="range" class="form-range" name="age" min="18" max="65" value="30" oninput="ageVal.innerText=this.value">
+
+            <label class="form-label mt-3">Education Level</label>
+            <select class="form-select" name="education">
+              <option value="1">Bachelors</option>
+              <option value="0">HS-grad</option>
+              <option value="2">Masters</option>
+            </select>
+
+            <label class="form-label mt-3">Job Role</label>
+            <select class="form-select" name="occupation">
+              <option value="0">Tech-support</option>
+              <option value="1">Sales</option>
+              <option value="2">Exec-managerial</option>
+            </select>
+
+            <label class="form-label mt-3">Hours per week: <span id="hoursVal">40</span></label>
+            <input type="range" class="form-range" name="hours" min="1" max="80" value="40" oninput="hoursVal.innerText=this.value">
+
+            <button type="submit" class="btn btn-primary w-100 mt-4">🔍 Predict Salary</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Output Section -->
+      <div class="col-md-8">
+        <div class="card p-4 gradient-card2">
+          <div class="title mb-3 text-center">💼 Employee Salary Classification</div>
+          <p class="text-muted text-center">Predict if an employee earns more than 50K or not based on their profile</p>
+
+          {% if user_data %}
+          <hr>
+          <h5>📊 Input Summary</h5>
+          <table class="table table-striped table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Age</th>
+                <th>Education</th>
+                <th>Occupation</th>
+                <th>Hours/Week</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ user_data.age }}</td>
+                <td>{{ user_data.education }}</td>
+                <td>{{ user_data.occupation }}</td>
+                <td>{{ user_data.hours }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-success mt-3 prediction-box text-center">
+            🔮 <strong>Prediction:</strong> This employee earns <strong>{{ prediction }}</strong>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
